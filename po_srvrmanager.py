@@ -89,11 +89,11 @@ async def on_message(message: discord.Message):
         print(f"Received '{message.content}'")
         if message.author == client.user:
             return
-        elif message.content == "!srvrmanager clearattendees":
+        elif message.content == "!srvrmanager2 clearattendees":
             await handle_clear_attendees(message)
-        elif message.content == "!srvrmanager openhalls":
+        elif message.content == "!srvrmanager2 openhalls":
             await handle_open_halls(message)
-        elif message.content == "!srvrmanager closehalls":
+        elif message.content == "!srvrmanager2 closehalls":
             await handle_close_halls(message)
     except Exception as e:
         await message.add_reaction('❌')
