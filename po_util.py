@@ -81,7 +81,7 @@ class role_list:
     TEAM_CLUBS_ROLE_ID = roles[21][0]
     TEAM_SPADES_ROLE_ID = roles[22][0]
     TEAM_DIAMONDS_ROLE_ID = roles[20][0]
-# MODERATOR_BUDDY_ROLE_ID
+    MODERATOR_BUDDY_ROLE_ID = roles[45][0] #Is this right?
     TASK_1_ROLE_ID = roles[33][0]
     TASK_2_ROLE_ID = roles[34][0]
     TASK_3_ROLE_ID = roles[35][0]
@@ -110,7 +110,7 @@ role_emoji = {
     po_roles.TEAM_CLUBS_ROLE_ID: '♣',
     po_roles.TEAM_SPADES_ROLE_ID: '♠',
     po_roles.TEAM_DIAMONDS_ROLE_ID: '♦',
-    # "Moderator Buddy": '🌎',
+    po_roles.MODERATOR_BUDDY_ROLE_ID: '🌎',
     po_roles.TASK_1_ROLE_ID: '♥',
     po_roles.TASK_2_ROLE_ID: '♥',
     po_roles.TASK_3_ROLE_ID: '♥',

@@ -36,7 +36,7 @@ async def handle_clear_attendees(message: discord.Message):
                     sroles[po_roles.TEAM_CLUBS_ROLE_ID],
                     sroles[po_roles.TEAM_SPADES_ROLE_ID],
                     sroles[po_roles.TEAM_DIAMONDS_ROLE_ID],
-                    #sroles["Moderator Buddy"],
+                    sroles[po_roles.MODERATOR_BUDDY_ROLE_ID],
                     sroles[po_roles.TASK_1_ROLE_ID],
                     sroles[po_roles.TASK_2_ROLE_ID],
                     sroles[po_roles.TASK_3_ROLE_ID],
