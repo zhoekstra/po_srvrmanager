@@ -122,7 +122,7 @@ role_emoji = {
 }
 
 async def get_roles(guild: discord.Guild):
-    return {k: discord.utils.get(guild.roles, name=k) for k, v in role_emoji.items()}
+    return {k: discord.utils.get(guild.roles, id=k) for k, v in roles}
 
 
 async def reply(message: discord.Message, content: str):
