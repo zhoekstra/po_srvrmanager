@@ -61,7 +61,7 @@ async def handle_open_halls(message: discord.Message):
     halls: List[discord.CategoryChannel] = [c for c in guild.categories if c.name.endswith(' Hall')]
     for hall in halls:
         await reply(message, f"Opening Hall {hall.name}")
-        await hall.set_permissions(attendee_role, view_channel=True)
+        await hall.set_permissions(attendee_role, view_channel=True, connect=True)
         for channel in hall.channels:
             await channel.set_permissions(attendee_role, view_channel=True)
 
