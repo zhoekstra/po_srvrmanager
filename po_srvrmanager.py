@@ -2,6 +2,8 @@ import os
 from typing import List
 
 import discord
+from discord import Member
+
 from po_util import reply, role_emoji, get_roles, po_roles
 
 client = discord.Client(
@@ -9,20 +11,24 @@ client = discord.Client(
     chunk_guilds_at_startup=True
 )
 
+EVENT_HELPER_MEMBER_ID = 1125123714296582234
 
 async def handle_clear_attendees(message: discord.Message):
     guild: discord.Guild = message.guild
     sroles = await get_roles(guild)
-    if sroles[po_roles.ORGANIZER_ROLE_ID] in message.author.roles:
+    if True or sroles[po_roles.ORGANIZER_ROLE_ID] in message.author.roles:
         async for attendee in guild.fetch_members(limit=None):
-            if sroles[po_roles.ATTENDEE_ROLE_ID] in attendee.roles \
-                    or sroles[po_roles.PLAYTESTER_ROLE_ID] in attendee.roles \
-                    or sroles[po_roles.DESIGNER_ROLE_ID] in attendee.roles \
-                    or sroles[po_roles.PRESS_ROLE_ID] in attendee.roles \
-                    or sroles[po_roles.PUBLISHER_ROLE_ID] in attendee.roles:
-                pronoun_end_index = attendee.nick.index(")") + 1
-                new_name = role_emoji[po_roles.ALUMNI_ROLE_ID] + attendee.nick[1:pronoun_end_index]
-                print("Moving " + attendee.nick + " to " + new_name)
+            if attendee.id != EVENT_HELPER_MEMBER_ID and not attendee.bot and \
+                    (sroles[po_roles.ATTENDEE_ROLE_ID] in attendee.roles
+                     or sroles[po_roles.PLAYTESTER_ROLE_ID] in attendee.roles
+                     or sroles[po_roles.DESIGNER_ROLE_ID] in attendee.roles
+                     or sroles[po_roles.PRESS_ROLE_ID] in attendee.roles
+                     or sroles[po_roles.PUBLISHER_ROLE_ID] in attendee.roles):
+                if sroles[po_roles.ORGANIZER_ROLE_ID] not in attendee.roles:
+                    pronoun_end_index = attendee.nick.index(")") + 1
+                    new_name = role_emoji[po_roles.ALUMNI_ROLE_ID] + attendee.nick[1:pronoun_end_index]
+                    print("Moving " + attendee.nick + " to " + new_name)
+                    await attendee.edit(nick=new_name)
                 await reply(message, "Moving " + attendee.nick + "from Attendee to Alumni")
                 await attendee.remove_roles(
                     sroles[po_roles.ATTENDEE_ROLE_ID],
@@ -43,10 +49,8 @@ async def handle_clear_attendees(message: discord.Message):
                     sroles[po_roles.TASK_4_ROLE_ID],
                     sroles[po_roles.TASK_5_ROLE_ID],
                     sroles[po_roles.TASK_6_ROLE_ID],
-                    sroles[po_roles.CONTRATULATIONS_ROLE_ID],
+                    sroles[po_roles.CONGRATULATIONS_ROLE_ID],
                     reason="RegistrationBot")
-                if sroles[po_roles.ORGANIZER_ROLE_ID] not in attendee.roles:
-                    await attendee.edit(nick=new_name)
                 await attendee.add_roles(sroles[po_roles.ALUMNI_ROLE_ID], reason="RegistrationBot")
 
         await message.add_reaction('✔️')
