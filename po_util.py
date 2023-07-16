@@ -1,5 +1,7 @@
 import discord
 
+NEW_EVENT_HELPER_USER_ID = 1125123714296582234
+
 roles = [
     (690972325922865202, '@everyone'), #0
     (690972758309470238, '✨Organizer'), #1

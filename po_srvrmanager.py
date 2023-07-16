@@ -2,7 +2,7 @@ import os
 from typing import List
 
 import discord
-from po_util import reply, role_emoji, get_roles, po_roles
+from po_util import reply, role_emoji, get_roles, po_roles, NEW_EVENT_HELPER_USER_ID
 
 client = discord.Client(
     intents=discord.Intents.all(),
@@ -14,36 +14,21 @@ async def handle_clear_attendees(message: discord.Message):
     guild: discord.Guild = message.guild
     sroles = await get_roles(guild)
     if sroles[po_roles.ORGANIZER_ROLE_ID] in message.author.roles:
+        new_event_helper = discord.utils.get(guild.members, id=NEW_EVENT_HELPER_USER_ID)
+        roles_to_clear = new_event_helper.roles
         async for attendee in guild.fetch_members(limit=None):
-            if sroles[po_roles.ATTENDEE_ROLE_ID] in attendee.roles \
+            if (sroles[po_roles.ATTENDEE_ROLE_ID] in attendee.roles \
                     or sroles[po_roles.PLAYTESTER_ROLE_ID] in attendee.roles \
                     or sroles[po_roles.DESIGNER_ROLE_ID] in attendee.roles \
                     or sroles[po_roles.PRESS_ROLE_ID] in attendee.roles \
-                    or sroles[po_roles.PUBLISHER_ROLE_ID] in attendee.roles:
+                    or sroles[po_roles.PUBLISHER_ROLE_ID] in attendee.roles) \
+                    and attendee.id != NEW_EVENT_HELPER_USER_ID:
                 pronoun_end_index = attendee.nick.index(")") + 1
                 new_name = role_emoji[po_roles.ALUMNI_ROLE_ID] + attendee.nick[1:pronoun_end_index]
                 print("Moving " + attendee.nick + " to " + new_name)
                 await reply(message, "Moving " + attendee.nick + "from Attendee to Alumni")
                 await attendee.remove_roles(
-                    sroles[po_roles.ATTENDEE_ROLE_ID],
-                    sroles[po_roles.PLAYTESTER_ROLE_ID],
-                    sroles[po_roles.DESIGNER_ROLE_ID],
-                    sroles[po_roles.PRESS_ROLE_ID],
-                    sroles[po_roles.PUBLISHER_ROLE_ID],
-                    sroles[po_roles.FIRST_PO_ROLE_ID],
-                    sroles[po_roles.TEAM_PLAYER_ROLE_ID],
-                    sroles[po_roles.TEAM_HEARTS_ROLE_ID],
-                    sroles[po_roles.TEAM_CLUBS_ROLE_ID],
-                    sroles[po_roles.TEAM_SPADES_ROLE_ID],
-                    sroles[po_roles.TEAM_DIAMONDS_ROLE_ID],
-                    sroles[po_roles.MODERATOR_BUDDY_ROLE_ID],
-                    sroles[po_roles.TASK_1_ROLE_ID],
-                    sroles[po_roles.TASK_2_ROLE_ID],
-                    sroles[po_roles.TASK_3_ROLE_ID],
-                    sroles[po_roles.TASK_4_ROLE_ID],
-                    sroles[po_roles.TASK_5_ROLE_ID],
-                    sroles[po_roles.TASK_6_ROLE_ID],
-                    sroles[po_roles.CONTRATULATIONS_ROLE_ID],
+                    *roles_to_clear,
                     reason="RegistrationBot")
                 if sroles[po_roles.ORGANIZER_ROLE_ID] not in attendee.roles:
                     await attendee.edit(nick=new_name)
