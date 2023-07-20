@@ -15,7 +15,7 @@ async def handle_clear_attendees(message: discord.Message):
     sroles = await get_roles(guild)
     if sroles[po_roles.ORGANIZER_ROLE_ID] in message.author.roles:
         new_event_helper = discord.utils.get(guild.members, id=NEW_EVENT_HELPER_USER_ID)
-        roles_to_clear = new_event_helper.roles
+        roles_to_clear = new_event_helper.roles[1:]
         async for attendee in guild.fetch_members(limit=None):
             if (sroles[po_roles.ATTENDEE_ROLE_ID] in attendee.roles \
                     or sroles[po_roles.PLAYTESTER_ROLE_ID] in attendee.roles \
