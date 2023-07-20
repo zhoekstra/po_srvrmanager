@@ -35,7 +35,7 @@ async def handle_clear_attendees(message: discord.Message):
                 
                 await attendee.add_roles(sroles[po_roles.ALUMNI_ROLE_ID], reason="RegistrationBot")
 
-        await message.add_reaction('✔️')
+        await message.add_reaction('✅')
     else:
         await reply(message, "Command author is not an organizer")
 
