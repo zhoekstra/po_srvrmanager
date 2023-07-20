@@ -28,7 +28,7 @@ async def handle_clear_attendees(message: discord.Message):
                     new_name = role_emoji[po_roles.ALUMNI_ROLE_ID] + attendee.nick[1:pronoun_end_index]
                     print("Moving " + attendee.nick + " to " + new_name)
                     await attendee.edit(nick=new_name)
-                await reply(message, "Moving " + attendee.nick + "from Attendee to Alumni")
+                await reply(message, "Attempting to move " + attendee.nick + " from Attendee to Alumni")
                 await attendee.remove_roles(
                     *roles_to_clear,
                     reason="RegistrationBot")
