@@ -22,16 +22,17 @@ async def handle_clear_attendees(message: discord.Message):
                     or sroles[po_roles.DESIGNER_ROLE_ID] in attendee.roles \
                     or sroles[po_roles.PRESS_ROLE_ID] in attendee.roles \
                     or sroles[po_roles.PUBLISHER_ROLE_ID] in attendee.roles) \
-                    and attendee.id != NEW_EVENT_HELPER_USER_ID:
-                pronoun_end_index = attendee.nick.index(")") + 1
-                new_name = role_emoji[po_roles.ALUMNI_ROLE_ID] + attendee.nick[1:pronoun_end_index]
-                print("Moving " + attendee.nick + " to " + new_name)
+                    and attendee.id != NEW_EVENT_HELPER_USER_ID and not attendee.bot:
+                if sroles[po_roles.ORGANIZER_ROLE_ID] not in attendee.roles:
+                    pronoun_end_index = attendee.nick.index(")") + 1
+                    new_name = role_emoji[po_roles.ALUMNI_ROLE_ID] + attendee.nick[1:pronoun_end_index]
+                    print("Moving " + attendee.nick + " to " + new_name)
+                    await attendee.edit(nick=new_name)
                 await reply(message, "Moving " + attendee.nick + "from Attendee to Alumni")
                 await attendee.remove_roles(
                     *roles_to_clear,
                     reason="RegistrationBot")
-                if sroles[po_roles.ORGANIZER_ROLE_ID] not in attendee.roles:
-                    await attendee.edit(nick=new_name)
+                
                 await attendee.add_roles(sroles[po_roles.ALUMNI_ROLE_ID], reason="RegistrationBot")
 
         await message.add_reaction('✔️')
