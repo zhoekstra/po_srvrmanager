@@ -93,7 +93,7 @@ class role_list:
     CONGRATULATIONS_ROLE_ID = roles[39][0]
     TREEHOUSE_ROLE_ID = roles[40][0]
     FEATURED_GUEST_ROLE_ID = roles[43][0]
-    EVERYONE_ROLE_ROLE_ID = roles[0][0]
+    EVERYONE_ROLE_ID = roles[0][0]
     
 po_roles = role_list()
 
