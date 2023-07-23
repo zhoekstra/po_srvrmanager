@@ -9,6 +9,7 @@ client = discord.Client(
     chunk_guilds_at_startup=True
 )
 
+EVENT_HELPER_MEMBER_ID = 1125123714296582234
 
 async def handle_clear_attendees(message: discord.Message):
     guild: discord.Guild = message.guild
@@ -34,6 +35,7 @@ async def handle_clear_attendees(message: discord.Message):
                     *roles_to_clear,
                     reason="RegistrationBot")
                 
+
                 await attendee.add_roles(sroles[po_roles.ALUMNI_ROLE_ID], reason="RegistrationBot")
 
         await message.add_reaction('✅')
@@ -48,7 +50,7 @@ async def handle_open_halls(message: discord.Message):
     halls: List[discord.CategoryChannel] = [c for c in guild.categories if c.name.endswith(' Hall')]
     for hall in halls:
         await reply(message, f"Opening Hall {hall.name}")
-        await hall.set_permissions(attendee_role, view_channel=True)
+        await hall.set_permissions(attendee_role, view_channel=True, connect=True)
         for channel in hall.channels:
             await channel.set_permissions(attendee_role, view_channel=True)
 
@@ -60,9 +62,9 @@ async def handle_close_halls(message: discord.Message):
     halls: List[discord.CategoryChannel] = [c for c in guild.categories if c.name.endswith(' Hall')]
     for hall in halls:
         await reply(message, f"Closing Hall {hall.name}")
-        await hall.set_permissions(attendee_role, view_channel=False)
+        await hall.set_permissions(attendee_role, view_channel=False, connect=False)
         for channel in hall.channels:
-            await channel.set_permissions(attendee_role, view_channel=False)
+            await channel.set_permissions(attendee_role, view_channel=False, connect=False)
 
 
 @client.event

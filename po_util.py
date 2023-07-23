@@ -67,7 +67,6 @@ roles = [
     (1123768688949080094, '🃏PCIO User'), #61
     (1123768864166137856, '🧊Tabletopia User') #62
     ]
-
 class role_list:
     ATTENDEE_ROLE_ID = roles[9][0]
     ORGANIZER_ROLE_ID = roles[1][0]
@@ -83,7 +82,7 @@ class role_list:
     TEAM_CLUBS_ROLE_ID = roles[21][0]
     TEAM_SPADES_ROLE_ID = roles[22][0]
     TEAM_DIAMONDS_ROLE_ID = roles[20][0]
-    MODERATOR_BUDDY_ROLE_ID = roles[45][0] #Is this right?
+    MODERATOR_BUDDY_ROLE_ID = roles[45][0]
     TASK_1_ROLE_ID = roles[33][0]
     TASK_2_ROLE_ID = roles[34][0]
     TASK_3_ROLE_ID = roles[35][0]
@@ -123,6 +122,7 @@ role_emoji = {
     po_roles.CONGRATULATIONS_ROLE_ID: '♥',
     po_roles.TREEHOUSE_ROLE_ID: '🌳'
 }
+
 
 async def get_roles(guild: discord.Guild):
     return {k: discord.utils.get(guild.roles, id=k) for k, v in roles}
